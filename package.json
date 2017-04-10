@@ -1,0 +1,14 @@
+{
+  "name": "functional-flash-cards",
+  "version": "1.0.0",
+  "description": "flash card web app written in elm",
+  "scripts": {
+    "start": "elm-live Main.elm --yes --open"
+  },
+  "dependencies": {
+    "elm": "^0.18.0"
+  },
+  "devDependencies": {
+    "elm-live": "^2.7.4"
+  }
+}

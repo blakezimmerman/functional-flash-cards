@@ -63,4 +63,6 @@ view model =
 renderCardList : List Card -> Html Msg
 renderCardList cardList =
   ul []
-    (List.map (\card -> li [] [ text (toString card) ]) cardList)
+    (List.map (\card ->
+      li [] [ text ("Front: " ++ card.frontCard ++ " Back: " ++ card.backCard) ]
+    ) cardList)

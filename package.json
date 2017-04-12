@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "flash card web app written in elm",
   "scripts": {
-    "start": "elm-live Main.elm --yes --open"
+    "start": "elm-live src/Main.elm --output=main.js --open"
   },
   "dependencies": {
     "elm": "^0.18.0"

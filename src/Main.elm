@@ -72,7 +72,7 @@ view model =
     , div []
         [ if model.mode == Create
           then addCardForm model
-          else renderCardList model.cardList
+          else studyCardList model.cardList
         ]
     ]
 
@@ -83,11 +83,31 @@ addCardForm model =
     [ input [ placeholder "Front of Card", onInput FrontCard ] []
     , input [ placeholder "Back of Card", onInput BackCard ] []
     , button [ onClick AddCard ] [ text "Add Card" ]
+    , renderCardList model.cardList
     ]
 
 renderCardList : List Card -> Html Msg
 renderCardList cardList =
-  ul []
-    (List.map (\card ->
-      li [] [ text ("Front: " ++ card.frontCard ++ " Back: " ++ card.backCard) ]
-    ) cardList)
+  div [ class "renderCards"]
+    [ text "Current Cards:"
+    , table []
+        ( List.append
+          [ tr []
+              [ td [] [ text "Front of Card" ]
+              , td [] [ text "Back of Card" ]
+              ]
+          ]
+          (List.map (\card ->
+            tr []
+              [ td [] [ text card.frontCard ]
+              , td [] [ text card.backCard ]
+              ]
+          ) cardList)
+        )
+    ]
+
+studyCardList : List Card -> Html Msg
+studyCardList cardList =
+  div []
+    [ text "Time to Study!"
+    ]

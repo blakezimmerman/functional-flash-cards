@@ -1,0 +1,13 @@
+.renderCards {
+  margin: 10px;
+}
+
+td {
+  padding: 5px;
+}
+
+table, td {
+  margin: 10px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}

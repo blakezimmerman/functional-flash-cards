@@ -1,6 +1,7 @@
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Array exposing (..)
 
 
 main =
@@ -20,15 +21,21 @@ type alias Card =
 
 type alias Model =
   { mode : Mode
-  , currentCard : Card
-  , cardList: List Card
+  , currentInput : Card
+  , cardList: Array Card
+  , currentIndex : Int
+  , currentCard : Maybe Card
+  , showFront : Bool
   }
 
 model : Model
 model =
   { mode = Create
-  , currentCard = Card "" ""
-  , cardList = []
+  , currentInput = Card "" ""
+  , cardList = Array.empty
+  , currentIndex = 0
+  , currentCard = Nothing
+  , showFront = True
   }
 
 
@@ -40,6 +47,9 @@ type Msg
   | FrontCard String
   | BackCard String
   | AddCard
+  | Previous
+  | Next
+  | Flip
 
 update : Msg -> Model -> Model
 update msg model =
@@ -48,17 +58,43 @@ update msg model =
       { model | mode = Create }
 
     StudyMode ->
-      { model | mode = Study }
+      { model
+      | mode = Study
+      , currentCard =
+          Array.get model.currentIndex model.cardList
+      }
 
     FrontCard front ->
-      { model | currentCard = { frontCard = front, backCard = model.currentCard.backCard } }
+      { model | currentInput = { frontCard = front, backCard = model.currentInput.backCard } }
 
     BackCard back ->
-      { model | currentCard = { frontCard = model.currentCard.frontCard, backCard = back } }
+      { model | currentInput = { frontCard = model.currentInput.frontCard, backCard = back } }
 
     AddCard ->
-      { model | cardList = model.currentCard :: model.cardList }
+      { model | cardList = Array.push model.currentInput model.cardList }
 
+    Previous ->
+      if model.currentIndex > 0 then
+      { model
+      | currentCard =
+          Array.get (model.currentIndex-1) model.cardList
+      , currentIndex = model.currentIndex - 1
+      , showFront = True
+      }
+      else model
+
+    Next ->
+      if model.currentIndex < (Array.length model.cardList-1) then
+      { model
+      | currentCard =
+          Array.get (model.currentIndex+1) model.cardList
+      , currentIndex = model.currentIndex + 1
+      , showFront = True
+      }
+      else model
+
+    Flip ->
+      { model | showFront = not model.showFront }
 
 -- VIEW
 
@@ -72,7 +108,7 @@ view model =
     , div []
         [ if model.mode == Create
           then addCardForm model
-          else studyCardList model.cardList
+          else studyCardList model
         ]
     ]
 
@@ -86,7 +122,7 @@ addCardForm model =
     , renderCardList model.cardList
     ]
 
-renderCardList : List Card -> Html Msg
+renderCardList : Array Card -> Html Msg
 renderCardList cardList =
   div [ class "renderCards"]
     [ text "Current Cards:"
@@ -97,17 +133,46 @@ renderCardList cardList =
               , td [] [ text "Back of Card" ]
               ]
           ]
-          (List.map (\card ->
+          (Array.toList (Array.map (\card ->
             tr []
               [ td [] [ text card.frontCard ]
               , td [] [ text card.backCard ]
               ]
-          ) cardList)
+          ) cardList))
         )
     ]
 
-studyCardList : List Card -> Html Msg
-studyCardList cardList =
+studyCardList : Model -> Html Msg
+studyCardList model =
   div []
-    [ text "Time to Study!"
+    [ renderCurCard model
+    , button [ onClick Previous ] [ text "Previous Card" ]
+    , button [ onClick Flip ] [ text "Flip Card" ]
+    , button [ onClick Next ] [ text "Next Card" ]
+    ]
+
+renderCurCard : Model -> Html Msg
+renderCurCard model =
+  div []
+    [ if Array.length model.cardList == 0 then text "No cards made yet"
+      else
+        if model.showFront
+        then case model.currentCard of
+                Nothing -> text "Out of Range"
+                Just currentCard -> div [] 
+                  [ text currentCard.frontCard
+                  , renderCardPosition model
+                  ]
+        else case model.currentCard of
+                Nothing -> text "Out of Range"
+                Just currentCard -> div [] 
+                  [ text currentCard.backCard
+                  , renderCardPosition model
+                  ]
+    ]
+
+renderCardPosition : Model -> Html Msg
+renderCardPosition model =
+  div []
+    [ text (toString (model.currentIndex+1) ++ " of " ++ toString (Array.length model.cardList))
     ]

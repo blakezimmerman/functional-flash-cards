@@ -166,14 +166,16 @@ renderCurCard model =
         if model.showFront
         then case model.currentCard of
                 Nothing -> text "Out of Range"
-                Just currentCard -> div [ class "cardText" ] 
-                  [ text currentCard.frontCard
+                Just currentCard -> div [] 
+                  [ div [ class "cardText" ]
+                      [ text currentCard.frontCard ]
                   , renderCardPosition model
                   ]
         else case model.currentCard of
                 Nothing -> text "Out of Range"
-                Just currentCard -> div [ class "cardText" ] 
-                  [ text currentCard.backCard
+                Just currentCard -> div [] 
+                  [ div [ class "cardText" ]
+                      [ text currentCard.backCard ]
                   , renderCardPosition model
                   ]
     ]

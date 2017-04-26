@@ -55,13 +55,18 @@ update : Msg -> Model -> Model
 update msg model =
   case msg of
     CreateMode ->
-      { model | mode = Create }
+      { model
+      | mode = Create
+      , currentInput = Card "" ""
+      }
 
     StudyMode ->
       { model
       | mode = Study
+      , currentIndex = 0
       , currentCard =
-          Array.get model.currentIndex model.cardList
+          Array.get 0 model.cardList
+      , showFront = True
       }
 
     FrontCard front ->

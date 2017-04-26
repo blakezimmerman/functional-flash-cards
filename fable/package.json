@@ -1,0 +1,16 @@
+{
+  "name": "functional-flash-cards",
+  "version": "1.0.0",
+  "description": "flash card web app written in fsharp",
+  "scripts": {
+    "start": "concurrently \"fable --watch\" \"lite-server\""
+  },
+  "dependencies": {
+    "fable-compiler": "^0.7.50",
+    "fable-core": "^0.7.30"
+  },
+  "devDependencies": {
+    "concurrently": "^3.4.0",
+    "lite-server": "^2.3.0"
+  }
+}

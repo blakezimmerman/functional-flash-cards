@@ -6,8 +6,10 @@
     "start": "concurrently \"fable --watch\" \"lite-server\""
   },
   "dependencies": {
+    "fable-arch": "^0.10.1",
     "fable-compiler": "^0.7.50",
-    "fable-core": "^0.7.30"
+    "fable-core": "^0.7.30",
+    "virtual-dom": "^2.1.1"
   },
   "devDependencies": {
     "concurrently": "^3.4.0",

@@ -22,7 +22,7 @@ type alias Card =
 type alias Model =
   { mode : Mode
   , currentInput : Card
-  , cardList: Array Card
+  , cardList : Array Card
   , currentIndex : Int
   , currentCard : Maybe Card
   , showFront : Bool
@@ -143,7 +143,7 @@ renderCardList cardList =
               , td [ class "tableHeader" ] [ text "Back of Card" ]
               ]
           ]
-          (Array.toList (Array.map (\card ->
+          ( Array.toList (Array.map (\card ->
             tr []
               [ td [] [ text card.frontCard ]
               , td [] [ text card.backCard ]

@@ -1,0 +1,145 @@
+* {
+  font-weight: 300;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+}
+
+.header {
+  height: 80px;
+  width: 100%;
+  line-height: 80px;
+  background-color: #0066cc;
+  color: white;
+  font-size: 34px;
+  text-align: center;
+  margin-bottom: 8px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+button {
+  border: none;
+  outline: none;
+  background-color: #0066cc;
+  color: white;
+  border-radius: 8px;
+  margin: 5px;
+  padding: 12px 24px;
+  font-size: 14px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #1a8cff;
+}
+
+button:focus {
+  background-color: #0066cc;
+}
+
+input {
+  font-size: 16px;
+  padding: 10px 5px;
+  width: calc(50% - 14px);
+}
+
+.cardInput {
+  font-size: 24px;
+  width: 80%;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.inputHeader {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.addButton {
+  margin: 1px 0 0 0;
+  width: 100%;
+}
+
+.addButton:hover {
+  background-color: #2eb82e;
+}
+
+.addButton:focus {
+  background-color: #0066cc;
+}
+
+.renderCards {
+  text-align: center;
+  width: 100%;
+  margin-top: 5%;
+  padding: 20px 0;
+}
+
+table {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 3%;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  background-color: white;
+}
+
+.tableHeader {
+  background-color: #0066cc;
+  color: white;
+}
+
+table, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.curCard {
+  font-size: 28px;
+  font-weight: 400;
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+  height: 175px;
+  padding-top: 60px;
+  margin: 20px auto;
+  background-color: #e6f5ff;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.cardText {
+  font-size: 28px;
+  font-weight: 400;
+  text-align: center;
+  overflow: scroll;
+  height: 115px;
+  padding: 0 5%;
+}
+
+.cardPosition {
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 25px 0 0 0;
+}
+
+.studyButtons {
+  width: 90%;
+  max-width: 530px;
+  margin: auto;
+}
+
+.studyButton {
+  width: calc(33.3% - 10px);
+}

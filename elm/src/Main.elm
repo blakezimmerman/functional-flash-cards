@@ -76,7 +76,10 @@ update msg model =
       { model | currentInput = { frontCard = model.currentInput.frontCard, backCard = back } }
 
     AddCard ->
-      { model | cardList = Array.push model.currentInput model.cardList }
+      { model
+      | cardList = Array.push model.currentInput model.cardList
+      , currentInput = Card "" ""
+      }
 
     Previous ->
       if model.currentIndex > 0 then
@@ -125,8 +128,16 @@ addCardForm : Model -> Html Msg
 addCardForm model =
   div [ class "cardInput" ]
     [ div [ class "inputHeader" ] [ text "Add a Card" ]
-    , input [ placeholder "Front of Card", onInput FrontCard ] []
-    , input [ placeholder "Back of Card", onInput BackCard ] []
+    , input
+      [ placeholder "Front of Card",
+        value model.currentInput.frontCard,
+        onInput FrontCard
+      ] []
+    , input
+      [ placeholder "Back of Card",
+        value model.currentInput.backCard,
+        onInput BackCard
+      ] []
     , button [ onClick AddCard, class "addButton" ] [ text "Add Card" ]
     , if Array.length model.cardList /= 0 then renderCardList model.cardList
       else text ""

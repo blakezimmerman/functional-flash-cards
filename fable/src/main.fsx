@@ -79,6 +79,7 @@ let update model action =
   | AddCard ->
       { model with
           CardList = Array.append model.CardList [| model.CurrentInput |]
+          CurrentInput = { FrontCard = ""; BackCard = "" }
       }
   
   | Previous ->
@@ -112,9 +113,10 @@ let clickButton className (action:Actions) txt =
            ]
            [ text txt ]
 
-let textInput placeholder (action:string->Actions) =
+let textInput placeholder value (action:string->Actions) =
   input [ property "type" "text" 
           property "placeholder" placeholder
+          property "value" value
           onEvent "oninput" (fun e -> action (unbox e?target?value))
         ]
 
@@ -173,8 +175,8 @@ let renderCardList cardList =
 let addCardForm model =
   div [ classy "cardInput" ]
     [ div [ classy "inputHeader" ] [ text "Add a Card" ]
-      textInput "Front of Card" FrontCard
-      textInput "Back of Card" BackCard
+      textInput "Front of Card" model.CurrentInput.FrontCard FrontCard
+      textInput "Back of Card" model.CurrentInput.BackCard BackCard
       clickButton "addButton" AddCard "Add Card"
       ( if model.CardList.Length <> 0
         then renderCardList model.CardList

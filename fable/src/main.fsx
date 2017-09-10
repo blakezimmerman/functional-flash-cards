@@ -108,10 +108,10 @@ let update model action =
 // VIEW
 
 let clickButton className (action:Actions) txt =
-    button [ classy className
-             onMouseClick (fun _ -> action)
-           ]
-           [ text txt ]
+  button [ classy className
+           onMouseClick (fun _ -> action)
+         ]
+         [ text txt ]
 
 let textInput placeholder value (action:string->Actions) =
   input [ property "type" "text" 
@@ -125,11 +125,11 @@ let renderCardPosition model =
     [ text ((model.CurrentIndex + 1).ToString() + " of " + (model.CardList.Length).ToString()) ]
 
 let renderCard cardText model =
-    div []
-      [ div [ classy "cardText" ]
-          [ text cardText ]
-        renderCardPosition model
-      ]
+  div []
+    [ div [ classy "cardText" ]
+        [ text cardText ]
+      renderCardPosition model
+    ]
 
 let renderCurCard model =
   div [ classy "curCard" ]
@@ -167,10 +167,10 @@ let tableBody cardList =
     ) cardList)
 
 let renderCardList cardList =
-    div [ classy "renderCards" ]
-      [ text "Current Cards"
-        table [] (List.append tableHeader (tableBody cardList))
-      ]
+  div [ classy "renderCards" ]
+    [ text "Current Cards"
+      table [] (List.append tableHeader (tableBody cardList))
+    ]
 
 let addCardForm model =
   div [ classy "cardInput" ]

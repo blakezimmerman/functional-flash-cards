@@ -4,6 +4,7 @@ import Html.Events exposing (..)
 import Array exposing (..)
 
 
+main : Program Never Model Msg
 main =
   Html.beginnerProgram { model = model, view = view, update = update }
 
@@ -70,10 +71,20 @@ update msg model =
       }
 
     FrontCard front ->
-      { model | currentInput = { frontCard = front, backCard = model.currentInput.backCard } }
+      { model
+      | currentInput =
+        { frontCard = front
+        , backCard = model.currentInput.backCard
+        }
+      }
 
     BackCard back ->
-      { model | currentInput = { frontCard = model.currentInput.frontCard, backCard = back } }
+      { model
+      | currentInput =
+        { frontCard = model.currentInput.frontCard
+        , backCard = back
+        }
+      }
 
     AddCard ->
       { model
@@ -83,22 +94,21 @@ update msg model =
 
     Previous ->
       if model.currentIndex > 0 then
-      { model
-      | currentCard =
-          Array.get (model.currentIndex-1) model.cardList
-      , currentIndex = model.currentIndex - 1
-      , showFront = True
-      }
+        { model
+        | currentCard = Array.get (model.currentIndex-1) model.cardList
+        , currentIndex = model.currentIndex - 1
+        , showFront = True
+        }
       else model
 
     Next ->
       if model.currentIndex < (Array.length model.cardList-1) then
-      { model
-      | currentCard =
-          Array.get (model.currentIndex+1) model.cardList
-      , currentIndex = model.currentIndex + 1
-      , showFront = True
-      }
+        { model
+        | currentCard =
+            Array.get (model.currentIndex+1) model.cardList
+        , currentIndex = model.currentIndex + 1
+        , showFront = True
+        }
       else model
 
     Flip ->
@@ -109,9 +119,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div []
-    [ div [ class "header" ]
-        [ text "Flash Cards!"
-        ]
+    [ div [ class "header" ] [ text "Flash Cards!" ]
     , div []
         [ button [ onClick CreateMode ] [ text "Create Mode" ]
         , button [ onClick StudyMode ] [ text "Study Mode" ]
@@ -139,7 +147,8 @@ addCardForm model =
         onInput BackCard
       ] []
     , button [ onClick AddCard, class "addButton" ] [ text "Add Card" ]
-    , if Array.length model.cardList /= 0 then renderCardList model.cardList
+    , if Array.length model.cardList /= 0
+      then renderCardList model.cardList
       else text ""
     ]
 
@@ -178,26 +187,26 @@ renderCurCard : Model -> Html Msg
 renderCurCard model =
   div [ class "curCard" ]
     [ if Array.length model.cardList == 0 then text "No cards made yet"
-      else
-        if model.showFront
-        then case model.currentCard of
-                Nothing -> text "Out of Range"
-                Just currentCard -> div [] 
-                  [ div [ class "cardText" ]
-                      [ text currentCard.frontCard ]
-                  , renderCardPosition model
-                  ]
-        else case model.currentCard of
-                Nothing -> text "Out of Range"
-                Just currentCard -> div [] 
-                  [ div [ class "cardText" ]
-                      [ text currentCard.backCard ]
-                  , renderCardPosition model
-                  ]
+      else renderCardSide model
     ]
+
+renderCardSide : Model -> Html Msg
+renderCardSide model =
+  case model.currentCard of
+    Nothing -> text "Out of Range"
+    Just currentCard -> div [] 
+      [ div [ class "cardText" ]
+          [ text (case model.showFront of
+              True -> currentCard.frontCard
+              False -> currentCard.backCard)
+          ]
+      , renderCardPosition model
+      ]
 
 renderCardPosition : Model -> Html Msg
 renderCardPosition model =
   div [ class "cardPosition" ]
-    [ text (toString (model.currentIndex+1) ++ " of " ++ toString (Array.length model.cardList))
+    [ text (toString (model.currentIndex+1)
+      ++ " of " ++
+      toString (Array.length model.cardList))
     ]
